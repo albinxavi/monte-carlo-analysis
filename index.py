@@ -1,10 +1,8 @@
-import os
+import json
 import logging
-from flask import Flask, request, redirect
+from flask import Flask, request
 from handlers import page_handler
 from handlers import service_handler
-# from services import lambda
-# from services import *
 
 from flask import Flask
 
@@ -34,19 +32,30 @@ def provision_ec2():
     return service_handler.provision_ec2(args.get('R'))
 
 
-@app.route('/input')
-def get_input_page():
-    args = request.args.to_dict()
-
-    return page_handler.render_input_page(args)
-
-
 @app.post('/simulate')
 def simulate():
     args = request.get_json()
-    print(args)
 
     return service_handler.simulate(args)
+
+
+@app.route('/terminate')
+def terminate_EC2s():
+
+    return service_handler.terminate_EC2s()
+
+
+@app.post('/result')
+def get_result_page():
+    args = json.loads(request.form.get("json"))
+
+    return page_handler.render_result_page(args)
+
+
+@app.route('/audit')
+def get_aduit_page():
+
+    return page_handler.render_audit_page()
 
 
 @app.errorhandler(500)

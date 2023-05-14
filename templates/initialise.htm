@@ -14,9 +14,14 @@
   </head>
   <body>
     <div class="container-sm-25">
+      <a href="/audit"
+        ><button type="button" class="btn btn-info sticky-top m-3">
+          Audit Page
+        </button></a
+      >
       <h1 class="text-center">Select the resources for simulation:</h1>
       <div class="container-sm w-50">
-        <form id="form" action="/input">
+        <form id="form" action="/result" method="post">
           <div class="form-group row m-4">
             <label for="S" class="col-sm-3 col-form-label">
               Scalable resource (S):
@@ -98,7 +103,7 @@
             <label for="T" class="col-sm-3 col-form-label"
               >Type of Signal</label
             >
-            <div class="col-sm-8 py-2" id="T">
+            <div class="col-sm-4 py-2" id="T">
               <div class="form-check form-check-inline">
                 <input
                   class="form-check-input"
@@ -119,6 +124,15 @@
                   onchange="handleInputChange(event)"
                 />
                 <label class="form-check-label">Sell</label>
+              </div>
+              <div class="col-sm-2 py-2">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="resetForm(event)"
+                >
+                  Reset
+                </button>
               </div>
             </div>
           </div>
@@ -167,17 +181,21 @@
               class="spinner-border text-primary mx-5 my-1 hide"
             ></div>
           </div>
+          <div class="form-group row m-4 hide" id="terminate">
+            <button
+              type="button"
+              class="btn btn-primary col-sm-10"
+              onclick="terminateEc2s(event)"
+            >
+              Terminate EC2s
+            </button>
+          </div>
+          <input id="json" name="json" hidden />
           <div class="form-group row m-4 hide" id="goToResults">
             <button type="submit" class="btn btn-success col-sm-10">
               Go to results
             </button>
           </div>
-
-          <!-- <div class="form-group row m-4 hide" id="gotoInputs">
-            <button type="submit" class="btn btn-success col-sm-10">
-              Go to inputs page
-            </button>
-          </div> -->
         </form>
       </div>
     </div>
@@ -207,8 +225,10 @@
         "warmUpLambdaSpinner"
       );
       const simulateDiv = document.getElementById("simulate");
+      const terminateDiv = document.getElementById("terminate");
       const toast = document.getElementById("toast");
       const form = document.getElementById("form");
+      const json_data = document.getElementById("json");
       const S = document.getElementById("S");
       const R = document.getElementById("R");
       const D = document.getElementById("D");
@@ -218,13 +238,13 @@
 
       var ipList = [];
 
-      function disableInputs() {
-        S.disabled = true;
-        R.disabled = true;
-        D.disabled = true;
-        H.disabled = true;
-        P.disabled = true;
-        T.forEach((t) => (t.disabled = true));
+      function disableInputs(status) {
+        S.disabled = status;
+        R.disabled = status;
+        D.disabled = status;
+        H.disabled = status;
+        P.disabled = status;
+        T.forEach((t) => (t.disabled = status));
       }
 
       function handleResourceSelect(ev) {
@@ -255,6 +275,15 @@
         }
       }
 
+      function resetForm(ev) {
+        simulateDiv.classList.add("hide");
+        warmUpLambdaDiv.classList.add("hide");
+        provisionEc2Div.classList.add("hide");
+        goToResultsDiv.classList.add("hide");
+        form.reset();
+        disableInputs(false);
+      }
+
       function warmUpLambda(ev) {
         warmUpLambdaSpinner.classList.remove("hide");
         fetch("/warm_up")
@@ -267,7 +296,7 @@
             // toast.classList.add("show");
             simulateDiv.classList.remove("hide");
           });
-        disableInputs();
+        disableInputs(true);
       }
 
       function provisionEc2(ev) {
@@ -285,7 +314,7 @@
             simulateDiv.classList.remove("hide");
             provisionEc2Button.disabled = true;
           });
-        disableInputs();
+        disableInputs(true);
       }
 
       function simulate(ev) {
@@ -315,7 +344,21 @@
           })
           .then((res) => {
             console.log(res);
+            json_data.value = JSON.stringify(res);
             simulateSpinner.classList.add("hide");
+            if (S.value == "ec2") terminateDiv.classList.remove("hide");
+            else goToResultsDiv.classList.remove("hide");
+          });
+      }
+
+      function terminateEc2s(ev) {
+        fetch("/terminate")
+          .then((data) => {
+            return data.json();
+          })
+          .then((res) => {
+            console.log(res);
+            simulateDiv.classList.add("hide");
             goToResultsDiv.classList.remove("hide");
           });
       }
