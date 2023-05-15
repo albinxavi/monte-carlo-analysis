@@ -1,10 +1,12 @@
-import json
+import os
 import logging
+import json
 from flask import Flask, request
 from handlers import page_handler
 from handlers import service_handler
-
 from flask import Flask
+os.environ['AWS_SHARED_CREDENTIALS_FILE'] = './cred'
+
 
 app = Flask(__name__)
 
@@ -35,6 +37,7 @@ def provision_ec2():
 @app.post('/simulate')
 def simulate():
     args = request.get_json()
+    print(args)
 
     return service_handler.simulate(args)
 

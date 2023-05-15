@@ -51,6 +51,5 @@ def run_ec2(ec2_data):
 def terminate_instances():
     instances = ec2.instances.filter(
         Filters=[{'Name': 'tag:Name', 'Values': ["flask-server"]}])
-    print(instances)
     instances.terminate()
     return {"message": "EC2s terminated"}
