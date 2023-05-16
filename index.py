@@ -1,11 +1,11 @@
-import os
 import logging
 import json
+import os
+os.environ['AWS_SHARED_CREDENTIALS_FILE'] = './cred'
 from flask import Flask, request
 from handlers import page_handler
 from handlers import service_handler
 from flask import Flask
-os.environ['AWS_SHARED_CREDENTIALS_FILE'] = './cred'
 
 
 app = Flask(__name__)
