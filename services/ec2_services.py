@@ -3,6 +3,8 @@ import time
 import requests
 from concurrent.futures import ThreadPoolExecutor
 
+from config import AMI_ID, INSTANCE_NAME, EC2_FLASK_ENDPOINT
+
 ec2 = boto3.resource('ec2', region_name='us-east-1')
 
 
@@ -21,7 +23,7 @@ def create_instances(R):
     instance_ids = []
     ec2_status = {}
     instances = ec2.create_instances(
-        ImageId="ami-004bb14b6e31d8e7d",
+        ImageId=AMI_ID,
         MinCount=R,
         MaxCount=R,
         InstanceType="t2.micro"
@@ -33,7 +35,7 @@ def create_instances(R):
         instance_ids.append(instance.id)
     print("EC2 IPs: ", ip_list)
     ec2.create_tags(Resources=instance_ids, Tags=[
-                    {'Key': "Name", "Value": "flask-server"}])
+                    {'Key': "Name", "Value": INSTANCE_NAME}])
     with ThreadPoolExecutor() as executor:
         results = executor.map(check_instance_availability, ip_list)
     for result in results:
@@ -44,12 +46,13 @@ def create_instances(R):
 def run_ec2(ec2_data):
     ip = list(ec2_data.keys())[0]
     params = ec2_data[ip]
-    response = requests.get("http://" + ip + ":8080/simulate", params=params)
+    response = requests.get("http://" + ip + ":8080/" +
+                            EC2_FLASK_ENDPOINT, params=params)
     return response.json()
 
 
 def terminate_instances():
     instances = ec2.instances.filter(
-        Filters=[{'Name': 'tag:Name', 'Values': ["flask-server"]}])
+        Filters=[{'Name': 'tag:Name', 'Values': [INSTANCE_NAME]}])
     instances.terminate()
     return {"message": "EC2s terminated"}

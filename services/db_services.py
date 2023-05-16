@@ -1,10 +1,6 @@
 import psycopg2
 
-DB_NAME = "ktjdnamf"
-DB_USER = "ktjdnamf"
-DB_PASS = "HeKEtWagEWZER419HvLekPwvIru6fO3e"
-DB_HOST = "drona.db.elephantsql.com"
-DB_PORT = "5432"
+from config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
 
 try:
     conn = psycopg2.connect(database=DB_NAME,
@@ -21,6 +17,7 @@ def execute_query(query):
     cur = conn.cursor()
     cur.execute(query)
     conn.commit()
+
 
 def execute_query_and_get_data(query):
     cur = conn.cursor()
