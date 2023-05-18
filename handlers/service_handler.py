@@ -1,5 +1,4 @@
 import time
-from statistics import mean
 from concurrent.futures import ThreadPoolExecutor
 
 from services import lambda_services
@@ -16,7 +15,7 @@ def provision_ec2(R):
 
 
 def store_analaysis_to_db(data):
-    query = f'INSERT INTO AUDIT(S, R, H, D, P, T, PROFITORLOSS, NINETYFIVEAVG, NINETYNINEAVG, COST) VALUES(\'{data["S"]}\', {data["R"]}, {data["H"]}, {data["D"]}, {data["P"]}, \'{data["T"]}\', {data["avg_95"]}, {data["avg_99"]}, {data["avg_PoL"]}, {data["cost"]})'
+    query = f'INSERT INTO AUDIT(S, R, H, D, P, T, PROFITORLOSS, NINETYFIVEAVG, NINETYNINEAVG, COST) VALUES(\'{data["S"]}\', {data["R"]}, {data["H"]}, {data["D"]}, {data["P"]}, \'{data["T"]}\', {data["avg_PoL"]}, {data["avg_95"]}, {data["avg_99"]}, {data["cost"]})'
     print(query)
     db_services.execute_query(query)
 
@@ -59,7 +58,7 @@ def simulate(args):
     end_time = time.time()
 
     response['audit_result'] = {"S": S, "R": R, "D": D, "H": H, "P": P, "T": T,
-                                "avg_95": avg_result[0], "avg_99": avg_result[1], "avg_PoL": mean(PoL_list), "cost": end_time-start_time}
+                                "avg_95": avg_result[0], "avg_99": avg_result[1], "avg_PoL": sum(PoL_list), "cost": end_time-start_time}
 
     store_analaysis_to_db(response['audit_result'])
     return response

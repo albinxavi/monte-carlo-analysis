@@ -1,5 +1,5 @@
 LAMBDA_URL = "https://phhxobp6pyjwt3txssqoxnxzh40bvipr.lambda-url.us-east-1.on.aws/"
-AMI_ID = "ami-004bb14b6e31d8e7d"
+AMI_ID = "ami-0dee5199b18e344e4"
 INSTANCE_NAME = "flask-server"
 EC2_FLASK_ENDPOINT = "simulate"
 DB_NAME = "ktjdnamf"
