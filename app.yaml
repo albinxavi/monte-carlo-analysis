@@ -1,2 +1,2 @@
 runtime: python310
-entrypoint: gunicorn -b :$PORT index:app
+entrypoint: gunicorn -b :$PORT index:app -t 180
