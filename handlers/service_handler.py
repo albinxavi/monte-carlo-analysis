@@ -44,21 +44,19 @@ def simulate(args):
     for result in results:
         data.append(result)
 
-    PoL_list = []
     signal_key = 'buy_results' if args.get('T') == 'Buy' else 'sell_results'
     for i in range(len(data[0][signal_key])):
-        sum_95, sum_99 = 0, 0
+        sum_95, sum_99, PoL = 0, 0, 0
         for j in range(R):
             sum_95 += data[j][signal_key][i][0]
             sum_99 += data[j][signal_key][i][1]
-            # PoL += data[j][signal_key][i][2]
-        response[signal_key].append([sum_95/R, sum_99/R])
-        PoL_list.append(data[0][signal_key][i][2])
+            PoL += data[j][signal_key][i][2]
+        response[signal_key].append([sum_95/R, sum_99/R, PoL/R])
     avg_result = [sum(x)/len(x) for x in zip(*response[signal_key])]
     end_time = time.time()
 
     response['audit_result'] = {"S": S, "R": R, "D": D, "H": H, "P": P, "T": T,
-                                "avg_95": avg_result[0], "avg_99": avg_result[1], "avg_PoL": sum(PoL_list), "cost": end_time-start_time}
+                                "avg_95": avg_result[0], "avg_99": avg_result[1], "avg_PoL": avg_result[2], "cost": end_time-start_time}
 
     store_analaysis_to_db(response['audit_result'])
     return response

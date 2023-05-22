@@ -35,12 +35,14 @@
               <th scope="col">#</th>
               <th scope="col">95th percentile</th>
               <th scope="col">99th percentile</th>
+              <th scope="col">Profit or Loss</th>
             </tr>
           </thead>
           <tbody>
-            {% for item in data %}
+            {% for item in table %}
             <tr>
               <th>{{ loop.index }}</th>
+              <td>{{ item[0] }}</td>
               <td>{{ item[1] }}</td>
               <td>{{ item[2] }}</td>
             </tr>
@@ -65,7 +67,7 @@
             "99% risk",
             "Average 95% risk",
             "Average 99% risk",
-          ]].concat({{ data|tojson|safe }}));
+          ]].concat({{ chart|tojson|safe }}));
 
         var options = {
           title: "Risk Analysis Result",
