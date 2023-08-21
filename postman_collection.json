@@ -1,0 +1,199 @@
+{
+	"info": {
+		"_postman_id": "8a175b4d-9826-4fdb-b1ba-ee19f739c4ba",
+		"name": "rajesgwari",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26845055"
+	},
+	"item": [
+		{
+			"name": "warmup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"s\": \"lambda\",\n    \"r\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/warmup"
+			},
+			"response": []
+		},
+		{
+			"name": "resources_ready",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/resources_ready"
+			},
+			"response": []
+		},
+		{
+			"name": "get_warmup_cost",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/get_warmup_cost"
+			},
+			"response": []
+		},
+		{
+			"name": "get_endpoints",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/get_endpoints"
+			},
+			"response": []
+		},
+		{
+			"name": "analyse",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"d\": 10000,\n    \"h\": 101,\n    \"t\": \"sell\",\n    \"p\": 7\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/analyse"
+			},
+			"response": []
+		},
+		{
+			"name": "get_sig_vars9599",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/get_sig_vars9599"
+			},
+			"response": []
+		},
+		{
+			"name": "get_avg_vars9599",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/get_avg_vars9599"
+			},
+			"response": []
+		},
+		{
+			"name": "get_sig_profit_loss",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/get_sig_profit_loss"
+			},
+			"response": []
+		},
+		{
+			"name": "get_tot_profit_loss",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/get_tot_profit_loss"
+			},
+			"response": []
+		},
+		{
+			"name": "get_chart_url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/get_chart_url"
+			},
+			"response": []
+		},
+		{
+			"name": "get_time_cost",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/get_time_cost"
+			},
+			"response": []
+		},
+		{
+			"name": "get_audit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}:3000/get_audit"
+			},
+			"response": []
+		},
+		{
+			"name": "reset",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/reset"
+			},
+			"response": []
+		},
+		{
+			"name": "terminate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/terminate"
+			},
+			"response": []
+		},
+		{
+			"name": "resources_terminated",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/resources_terminated"
+			},
+			"response": []
+		},
+		{
+			"name": "lambda-test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"warm_up\": false,\n    \"d\": 10000,\n    \"h\": 100,\n    \"t\": \"sell\",\n    \"p\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://234tauunniu7dpf35qk4t4uoya0wtgiy.lambda-url.us-east-1.on.aws/"
+			},
+			"response": []
+		},
+		{
+			"name": "ec2-test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"d\": 10000,\n    \"h\": 100,\n    \"t\": \"sell\",\n    \"p\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://34.227.112.24:8080/analyse"
+			},
+			"response": []
+		}
+	]
+}

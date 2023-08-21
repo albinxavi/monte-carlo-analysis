@@ -1,0 +1,6 @@
+ANALYSE_LAMBDA_URL = "https://234tauunniu7dpf35qk4t4uoya0wtgiy.lambda-url.us-east-1.on.aws/"
+STORAGE_LAMBDA_URL = "https://5aywhajztd6up5ymjkqyhf6nva0shsxs.lambda-url.us-east-1.on.aws/"
+STORAGE_S3_BUCKET = "monte-carlo-analysis-bucket"
+AMI_ID = "ami-0730e426690d2ff98"
+INSTANCE_NAME = "analyse-ec2-instance"
+EC2_FLASK_ENDPOINT = "analyse"
